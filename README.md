@@ -8,6 +8,41 @@ measurement that chose it, and you can see most of them on your own face.
 **Live: [mirror.pykero.com](https://mirror.pykero.com)** — no sign-in needed to
 scan and shop. Android APK: [`mirror.apk`](mirror.apk).
 
+## Trying it in a minute
+
+Nothing to install and nothing to sign into. Open the live link and upload or
+take **one close-up, evenly lit photo of one face**, then:
+
+1. **The diagnosis** names the two readings the whole build rests on — your
+   skin *colour*, which picks the shade, and your skin *condition*, which
+   picks the formula — and reads them back to you: undertone, depth,
+   hair-to-skin contrast, every concern plotted, and tips that each cite the
+   measurement behind them.
+2. **"See what suits you"** opens six aisles. Each says how big it is and how
+   many of it were picked for you; opening one lands on exactly those.
+3. **Every product names the measurement that chose it** — the ΔE from your
+   measured skin colour, the shift from your measured lip colour, the face
+   shape a cut was ranked against.
+4. **"Try it on"** renders it on your own photo, carrying *your* prescribed
+   intensities rather than a preset.
+
+The interesting comparison is two different faces: the same matched shade comes
+out matte on oily skin and dewy on dry, and the shelves reorder around the
+reading rather than around a bestseller list.
+
+**Which YouCam APIs do what** is set out in [YouCam APIs used](#youcam-apis-used)
+— ten endpoints, each named with the decision it changes.
+
+**The merchant side** (`/store`) is the only screen behind a sign-in. It is a
+free self-serve sign-up, and the shopper flow above never touches it. Running
+locally without Clerk keys leaves everything else working; the screen says so
+rather than blanking.
+
+**Screenshots:** [landing](docs/screenshots/1-landing.jpg) ·
+[diagnosis](docs/screenshots/2-diagnosis.jpg) ·
+[aisles](docs/screenshots/3-chooser.jpg) ·
+[a ranked shelf](docs/screenshots/4-foundation.jpg)
+
 ## The idea
 
 Skin has two separate properties, and shops only ever use one of them.
@@ -286,14 +321,21 @@ proxies `/api` through.
 
 Requires Bun 1.3+.
 
-`GEMINI_API_KEY` is optional. Without it the app still recommends the same six
-products per aisle, using the top colour matches, and labels them as matches
-rather than advice. With it, a model picks six per aisle from the twelve code
-already ranked, writes a sentence for each, and writes the read-back of the
-scan. Get a free key at https://aistudio.google.com/apikey.
+**Only `YOUCAM_API_KEY` and `YOUCAM_API_SECRET` are required.** Everything a
+shopper does — scan, diagnosis, read-back, six ranked aisles, every try-on —
+runs on those two alone. The other keys in `.env.example` each add one layer
+and each degrade in the open:
 
-Deployed separately from the repo: set it in the host's environment panel, not
-in a committed file. `GET /api/health` reports which layers are live on an
+| Key | Adds | Without it |
+|---|---|---|
+| `GEMINI_API_KEY` | The stylist layer: six picks per aisle written up, and the scan read back as prose. | The same six, from colour distance, labelled as matches rather than advice. |
+| `VITE_CLERK_PUBLISHABLE_KEY` + `CLERK_SECRET_KEY` | Merchant sign-in at `/store`. | Every shopper screen is unaffected; `/store` explains the setup instead of blanking. |
+
+Free keys: [aistudio.google.com/apikey](https://aistudio.google.com/apikey) for
+Gemini, [dashboard.clerk.com](https://dashboard.clerk.com) for Clerk.
+
+Keys are deployed separately from the repo: set them in the host's environment
+panel, not in a committed file. `GET /api/health` reports which layers are live on an
 instance:
 
 ```json

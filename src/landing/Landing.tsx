@@ -45,9 +45,9 @@ const AISLES = [
   },
   {
     n: '04',
-    t: 'Hair & looks',
-    q: 'Face shape decides the cut; the whole look renders in one pass.',
-    api: 'hair-transfer + look-vto',
+    t: 'Hair',
+    q: 'Face shape decides the cut, and it renders on your own photo.',
+    api: 'hair-transfer',
     colors: ['#1D1B18', '#3B2A20', '#5B4633', '#8E7B62', '#B08D57', '#D8CFC0'],
   },
 ]
@@ -115,7 +115,6 @@ const CHIPS = [
   'task/makeup-vto',
   'task/cloth-v4',
   'task/hair-transfer',
-  'task/look-vto',
   'task/skin-simulation',
 ]
 
@@ -357,7 +356,7 @@ export function Landing({
             Under the panel
           </p>
           <h2 className="mt-5 max-w-2xl font-serif text-4xl leading-[1.05] tracking-[-0.02em] text-[color-mix(in_oklab,var(--paper)_92%,transparent)] sm:text-5xl">
-            Twelve calls. No colour tagged by hand.
+            Ten calls. No colour tagged by hand.
           </h2>
           <div className="mt-12 flex flex-wrap gap-3">
             {CHIPS.map((c) => (
