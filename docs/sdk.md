@@ -102,9 +102,19 @@ const mirror = createMirror({ storeId: 'store-acme-beauty-1' })
 const reading = await mirror.scan(file)   // one selfie
 const shop    = await mirror.shop(reading) // ranked against your catalogue
 
-shop.shortlists.lipstick.forEach((p) => {
-  console.log(p.name, p.reason) // "Velvet Rouge — warm undertone, depth 4/6"
+// Everything the scan read back, in words: facts, tips, colours that work.
+console.log(reading.profile.summary)
+
+// The stylist's set for an aisle — up to six, best first.
+shop.picks.lipstick.forEach((pick) => {
+  const product = shop.shortlists.lipstick.find((p) => p.id === pick.productId)
+  console.log(pick.rank, product.name, pick.reason, pick.source)
+  // 1 "Milani Color Statement" "A deep red that shifts your measured lip
+  //    colour by 27.9 ΔE and follows your neutral undertone." "match"
 })
+
+// How big the aisle is, and how much of it was picked for this shopper.
+const { available, shown, recommended } = shop.counts.lipstick
 ```
 
 ### Methods
@@ -112,7 +122,7 @@ shop.shortlists.lipstick.forEach((p) => {
 | Method | Returns | Notes |
 |---|---|---|
 | `scan(file)` | `Reading` | Costs API units. Hold the result and reuse it. |
-| `shop(reading)` | `Shop` | Ranked shortlists + a pick per aisle, each with a reason. |
+| `shop(reading, audience?)` | `Shop` | Ranked shortlists, up to six picks per aisle, and per-aisle counts. |
 | `tryOnMakeup(reading, effects)` | image URL | Renders onto the scanned face. |
 | `catalogue()` | `RankedProduct[]` | Your shelf, unranked. |
 
@@ -229,9 +239,30 @@ CSV uses the same names as its header row; column order does not matter.
 | `POST /api/sdk/products` | Bearer key | Push a catalogue. |
 | `POST /api/sdk/feed` | Bearer key | Pull from a hosted feed or Shopify. |
 | `GET /api/sdk/catalogue?storeId=` | none | Public: your shelf. |
-| `POST /api/read` | none | Scan a face. |
-| `POST /api/shop` | none | Rank against a reading. Pass `storeId` to scope. |
+| `POST /api/read` | none | Scan a face. Returns the reading **and** its `profile`. |
+| `POST /api/shop` | none | Rank against a reading. Pass `storeId` to scope, `audience` to split the shelf. |
+| `POST /api/analysis` | none | The profile written as prose. Takes `{ profile }` from `/api/read`. |
 | `POST /api/tryon/makeup` | none | Render makeup onto a scan. |
+
+### What `shop()` returns
+
+| Field | Shape | Notes |
+|---|---|---|
+| `shortlists` | `Record<aisle, RankedProduct[]>` | The whole ordered aisle, trimmed to 500 rows for transport. |
+| `picks` | `Record<aisle, Pick[]>` | Up to six per aisle, best first. `rank` is 1-based. |
+| `counts` | `Record<aisle, {available, shown, recommended}>` | `available` is the real catalogue; `shown` is what was sent; `recommended` is `picks.length`. |
+| `audience` | `'women' \| 'men' \| 'everything'` | Echoed back, so your UI cannot drift from what was ranked. |
+| `gated` | `string[]` | Aisles ranked and returned in full, but not to be shown unasked. |
+
+Each `Pick` carries `source`. **`'model'`** means a language model chose it and
+wrote the sentence; **`'match'`** means none answered and these are the top
+colour matches. Show the difference — a fallback is a full set of
+recommendations, but it is not advice, and labelling it as such is the whole
+basis for trusting the rest.
+
+`audience` is the shopper's own answer where your site has one. The scan's
+detected gender is only a fallback: it is good enough to preselect a control
+and not good enough to decide what your catalogue shows.
 
 SDK routes send CORS headers, so they can be called from your own domain. They
 carry no cookies and no session — the only privileged routes are authenticated

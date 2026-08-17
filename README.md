@@ -22,7 +22,7 @@ hands you a list. Nothing you can measure about your face — oiliness, moisture
 redness, texture, face shape — enters the decision, so the right colour arrives
 in the wrong formula and gets returned or abandoned in a drawer.
 
-That is the whole build. Twelve YouCam endpoints feed one decision.
+That is the whole build. Ten YouCam endpoints feed one decision.
 
 ### The problems this solves
 
@@ -46,10 +46,14 @@ catalogue. One `<script>` tag, or a headless client if they want their own UI.
 
 **Recommendations you can audit.**
 Ranking is code — colour distance in CIELAB, per-aisle objectives — not a model
-guessing. A language model only picks one product from a shortlist of twelve
-that code already ranked, and writes one sentence. It can never invent a
-product, and when it is absent the app still recommends, labelled as a colour
-match rather than advice.
+guessing. A language model only picks **six** from a shortlist of twelve that
+code already ranked, and writes a sentence for each. It can never invent a
+product: an id it was not shown is refused. When it is absent the app still
+recommends the same six, labelled as colour matches rather than advice.
+
+The same containment covers the written analysis. The model is handed the
+PROFILE the scan produced, never the raw reading, so it is rephrasing findings
+the app already made rather than producing any of its own.
 
 **A shelf that does not go dark.** Public feeds fail. Each aisle falls back on
 its own, so a dead lipstick feed cannot cost you the foundation match, and a
@@ -63,22 +67,33 @@ fresh checkout with no network at all.
 2. **Diagnose.** Colour becomes an undertone, a depth and a seasonal palette.
    Concerns become a formula: glow, coverage and under-eye intensities, each
    printed with the reading that produced it.
-3. **Shop.** Seven aisles, each ranked by a different question, because they
-   are asking different things. Foundation must *match* your skin; blush and
-   clothes must *flatter* it; skincare aims at what your scan flagged.
-4. **Try on.** Foundation, lipstick, blush, clothes, hair and whole looks
-   render on your own photo. The makeup render carries *your* prescribed
-   intensities, so it is your formula in that shade rather than a preset.
-5. **Buy.** Anything a listed store sells can be ordered; the store sees it in
+3. **Read it back.** Before anything is for sale: your undertone, depth and
+   hair-to-skin *contrast*, the tips each reading supports, and every skin
+   score plotted. A language model writes it where one is configured; the
+   measured version is what shows otherwise, and the page says which you got.
+4. **Shop.** Six aisles, each ranked by a different question, because they are
+   asking different things. Foundation must *match* your skin; clothes must
+   *flatter* it; lipstick and blush must read as cosmetics *on* it; skincare
+   aims at what your scan flagged; hair is ranked against your face shape.
+   Each aisle prints how big it is and how many of it the stylist picked.
+5. **Try on.** Foundation, lipstick, blush, clothes and hair render on your own
+   photo. The makeup render carries *your* prescribed intensities, so it is
+   your formula in that shade rather than a preset.
+6. **Buy.** Anything a listed store sells can be ordered; the store sees it in
    their dashboard. Feed-only rows are not orderable, because there is no
    merchant to fulfil them.
 
+Who the shelf is for is the shopper's own answer, not the scan's guess. The
+detected gender only preselects a Women's / Men's / Everything control; that
+control is what filters clothes and folds the colour-cosmetic aisles away
+behind one tap.
+
 And on the other side of the counter:
 
-6. **List.** A shop signs in, uploads a spreadsheet or points at a feed it
+7. **List.** A shop signs in, uploads a spreadsheet or points at a feed it
    already publishes, and its products are ranked against real shoppers — with
    colours measured from the photos, not hand-tagged.
-7. **Embed.** Or it skips Mirror entirely and puts the engine on its own
+8. **Embed.** Or it skips Mirror entirely and puts the engine on its own
    storefront with one `<script>` tag, ranking its own catalogue.
 
 ## YouCam APIs used
@@ -106,7 +121,11 @@ display only — every response changes a product that gets recommended:
 - **`skin-tone-analysis`** is the spine. The measured skin hex becomes an
   undertone and a depth in CIELAB, which becomes a seasonal palette, which
   ranks *every* aisle — clothes included. The measured lip colour anchors
-  lipstick ranking so a recommendation flatters the mouth you have.
+  lipstick ranking so a recommendation flatters the mouth you have, and the
+  measured HAIR colour gives contrast: hair-to-skin lightness, which is not
+  depth and decides a different thing. Dark hair on light skin is high
+  contrast at a light depth. Depth picks how deep a colour goes; contrast
+  picks how far apart two colours on you can sit.
 - **`skin-analysis`** turns seven concern scores into the **formula**: finish,
   glow, coverage and under-eye intensities. This is the half other tools skip,
   and it is why the same matched shade is prescribed matte on oily skin and
@@ -129,6 +148,10 @@ display only — every response changes a product that gets recommended:
   novelty face paint rather than anything a shopper buys.
 - **`skin-simulation`** shows the same face after a course of treatment — the
   argument for a skincare product, made on the shopper's own photo.
+- **`face_quality`**, returned alongside the tone read, is the one note that is
+  about the PHOTO rather than the face: uneven lighting or a turned head is
+  said plainly, because a shopper with an odd result deserves to know which it
+  was.
 - **`file`** uploads the photo once; every task above reuses that id, so a
   seven-aisle session costs one upload rather than nine.
 
