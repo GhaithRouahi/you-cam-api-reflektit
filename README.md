@@ -242,6 +242,12 @@ from an **`.xlsx` or `.csv` upload** — the same spreadsheet a shop already
 keeps. Product photos upload with the row. Column order does not matter, only
 the header names.
 
+A working five-row sheet to try it with:
+**[docs/sample-catalogue.xlsx](docs/sample-catalogue.xlsx)** — one product per
+aisle, real photos, real measured hexes. Columns are
+`name, brand, aisle, hex, image, price, url, garmentCategory`; only `name`,
+`hex` and `image` are required.
+
 **Nothing is hand-tagged.** A merchant supplies a photo and a price; the colour
 is *measured* from the image server-side (chroma-weighted average, decoded with
 sharp) and named. That measurement is what ranking sorts on, which is why a row

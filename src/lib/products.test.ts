@@ -72,6 +72,33 @@ test('columns are matched by name, not position', () => {
   expect(products[0].image).toBe('https://a.test/1.png')
 })
 
+test('a garment keeps the category the sheet declared', () => {
+  // The header is lowercased for matching, so a camelCase column name in
+  // COLUMNS never hit: every imported garment silently became 'auto', which
+  // makes the try-on guess the type from the photo rather than being told it.
+  const { products } = rowsToProducts(
+    [
+      ['name', 'aisle', 'hex', 'image', 'garmentCategory'],
+      ['Tank top', 'clothes', '#808080', 'https://a.test/1.png', 'upper_body'],
+      ['Trousers', 'clothes', '#26334d', 'https://a.test/2.png', 'lower_body'],
+    ],
+    'u',
+  )
+  expect(products.map((p) => p.garmentCategory)).toEqual(['upper_body', 'lower_body'])
+})
+
+test('a header written the way a human writes it still matches', () => {
+  // Owners type "Garment Category", not the camelCase field name.
+  const { products } = rowsToProducts(
+    [
+      ['Name', 'Aisle', 'Hex', 'Image', 'Garment Category'],
+      ['Coat', 'clothes', '#b08d57', 'https://a.test/3.png', 'outer'],
+    ],
+    'u',
+  )
+  expect(products[0].garmentCategory).toBe('outer')
+})
+
 test('a sheet missing required columns is refused whole', () => {
   const { products, errors } = rowsToProducts([['Name', 'Price'], ['X', '9']], 'u')
   expect(products).toHaveLength(0)

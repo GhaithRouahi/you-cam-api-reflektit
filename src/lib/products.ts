@@ -135,7 +135,13 @@ export function rowsToProducts(
 
   const header = rows[0].map((c) => str(c).toLowerCase().replace(/\s+/g, ''))
   const at = (row: unknown[], key: string) => {
-    const i = header.indexOf(key)
+    // The header was lowercased above, so the lookup has to be too. COLUMNS
+    // carries one camelCase name — garmentCategory — and matching it verbatim
+    // never hit, so every spreadsheet-imported garment silently lost its
+    // category and fell back to 'auto'. That is not a cosmetic default: it
+    // makes the try-on guess the garment type from the photo, so an uploaded
+    // top could render as a full-body piece.
+    const i = header.indexOf(key.toLowerCase())
     return i === -1 ? '' : row[i]
   }
   const missing = ['name', 'hex', 'image'].filter((k) => !header.includes(k))
