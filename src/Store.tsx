@@ -770,7 +770,7 @@ function SdkPanel({
 
       <p className="tiny">
         Full reference:{' '}
-        <a href="https://github.com/the-northstar/mirror/blob/main/docs/sdk.md">
+        <a href="https://github.com/GhaithRouahi/you-cam-api-reflektit/blob/main/docs/sdk.md">
           the SDK docs
         </a>
         .

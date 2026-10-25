@@ -469,7 +469,7 @@ shop.shortlists.lipstick[0]
 
           <div className="mt-14 flex flex-wrap items-baseline gap-x-8 gap-y-3">
             <a
-              href="https://github.com/the-northstar/mirror/blob/main/docs/sdk.md"
+              href="https://github.com/GhaithRouahi/you-cam-api-reflektit/blob/main/docs/sdk.md"
               className="font-mono text-[12px] uppercase tracking-[0.22em] text-[var(--gilt)] underline underline-offset-4 hover:text-[color-mix(in_oklab,var(--paper)_92%,transparent)]"
             >
               Read the full SDK docs →
