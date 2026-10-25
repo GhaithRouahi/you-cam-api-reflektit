@@ -179,9 +179,9 @@ export default function App() {
   // One key per module. The prescription is deliberately NOT persisted: the
   // shelf may have changed underneath it, so it is recomputed on restore.
   useEffect(() => {
-    const raw = localStorage.getItem('mirror.cart')
+    const raw = localStorage.getItem('reflektit.cart')
     if (raw) setCart(JSON.parse(raw))
-    const savedLines = localStorage.getItem('mirror.cart.lines')
+    const savedLines = localStorage.getItem('reflektit.cart.lines')
     if (savedLines) setCartLines(JSON.parse(savedLines))
     const saved = loadScans()
     setScans(saved)
@@ -194,13 +194,13 @@ export default function App() {
     }
   }, [])
   useEffect(() => {
-    localStorage.setItem('mirror.cart', JSON.stringify(cart))
+    localStorage.setItem('reflektit.cart', JSON.stringify(cart))
   }, [cart])
   // The bag keeps its own copy of each line: the prescription is recomputed on
   // restore, so without this a refresh on /bag leaves ids with nothing to
   // match against and the bag looks empty.
   useEffect(() => {
-    localStorage.setItem('mirror.cart.lines', JSON.stringify(cartLines))
+    localStorage.setItem('reflektit.cart.lines', JSON.stringify(cartLines))
   }, [cartLines])
 
   const scan = useCallback(async (picked: File) => {
@@ -311,10 +311,10 @@ export default function App() {
         <button
           className="brand"
           onClick={() => setScreen('land')}
-          aria-label="Mirror, back to start"
+          aria-label="Reflektit, back to start"
         >
           <span className="brand-mark" aria-hidden />
-          <span className="brand-word">Mirror</span>
+          <span className="brand-word">Reflektit</span>
         </button>
 
         {reading ? (

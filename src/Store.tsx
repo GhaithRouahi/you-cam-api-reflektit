@@ -691,7 +691,7 @@ function SdkPanel({
   if (!keys) {
     return (
       <section className="stack">
-        <h3>Add Mirror to your own site</h3>
+        <h3>Add Reflektit to your own site</h3>
         <p className="tiny">Loading your keys…</p>
       </section>
     )
@@ -701,7 +701,7 @@ function SdkPanel({
 
   return (
     <section className="stack">
-      <h3>Add Mirror to your own site</h3>
+      <h3>Add Reflektit to your own site</h3>
       <p className="tiny">
         Shoppers on your site scan their face and see <em>your</em> products — they never
         have to come here. These keys are yours; they were made when you signed in.
@@ -739,7 +739,7 @@ function SdkPanel({
       <div className="card stack">
         <span className="kicker">Step 1 — paste this into your site</span>
         <p className="tiny">
-          Anywhere before <code>&lt;/body&gt;</code>. A button appears; Mirror opens over
+          Anywhere before <code>&lt;/body&gt;</code>. A button appears; Reflektit opens over
           your page.
         </p>
         <pre className="snippet">{snippet}</pre>

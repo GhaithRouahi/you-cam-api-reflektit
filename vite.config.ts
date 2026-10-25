@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Mirror — Skin & Style Studio',
-        short_name: 'Mirror',
+        name: 'Reflektit — Skin & Style Studio',
+        short_name: 'Reflektit',
         description:
           'Understand your skin, then see what actually suits it. Skin analysis and virtual try-on in one place.',
         theme_color: '#0b0b0f',

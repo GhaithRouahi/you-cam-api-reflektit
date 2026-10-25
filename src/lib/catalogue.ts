@@ -218,7 +218,7 @@ export async function loadSkincare(signal?: AbortSignal): Promise<Product[]> {
       const res = await fetch(
         `https://world.openbeautyfacts.org/api/v2/search?categories_tags=${src.tag}` +
           `&fields=code,product_name,brands,image_front_url&page_size=24`,
-        { signal, headers: { 'User-Agent': 'Mirror/1.0 (hackathon)' } },
+        { signal, headers: { 'User-Agent': 'Reflektit/1.0 (hackathon)' } },
       )
       if (!res.ok) throw new Error(`${src.tag} ${res.status}`)
       const { products } = (await res.json()) as {

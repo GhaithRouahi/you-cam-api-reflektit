@@ -17,7 +17,7 @@ export interface PastScan {
   reading: unknown
 }
 
-const KEY = 'mirror.scans'
+const KEY = 'reflektit.scans'
 const MAX = 8
 
 export function loadScans(): PastScan[] {

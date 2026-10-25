@@ -154,7 +154,7 @@ export async function sdkKeyFor(ownerId: string): Promise<string> {
  * owner id that the key does not contain.
  */
 async function keyForStore(storeId: string): Promise<string> {
-  const secret = process.env.CLERK_SECRET_KEY ?? 'mirror-dev-secret'
+  const secret = process.env.CLERK_SECRET_KEY ?? 'reflektit-dev-secret'
   const key = await crypto.subtle.importKey(
     'raw',
     new TextEncoder().encode(secret),

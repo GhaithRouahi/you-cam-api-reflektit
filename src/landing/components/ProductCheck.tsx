@@ -92,7 +92,7 @@ export function ProductCheck({ onCheck }: { onCheck: () => void }) {
         </h2>
 
         <p className="mt-8 max-w-xl text-[17px] leading-relaxed text-[color-mix(in_oklab,var(--paper)_65%,transparent)]">
-          A photo of the bottle, the shirt or the frames — or the shop link. Mirror runs it
+          A photo of the bottle, the shirt or the frames — or the shop link. Reflektit runs it
           against your own reading and answers one question: does this fit you, or not? Nothing
           bought twice, nothing worn once and abandoned in a drawer.
         </p>

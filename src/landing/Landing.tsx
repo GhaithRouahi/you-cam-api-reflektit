@@ -100,7 +100,7 @@ API key    mk_own-9988…      (secret)`,
   {
     n: '03',
     t: 'Add one line',
-    d: 'A button appears on your storefront. Mirror opens over it, in an iframe.',
+    d: 'A button appears on your storefront. Reflektit opens over it, in an iframe.',
     code: `<script
   src="https://mirror.pykero.com/sdk/reflektit.js"
   data-store="own-99887766" defer></script>`,
@@ -421,7 +421,7 @@ export function Landing({
             One line of HTML. Your catalogue, measured.
           </h2>
           <p className="mt-7 max-w-2xl text-[17px] leading-relaxed text-[color-mix(in_oklab,var(--paper)_65%,transparent)]">
-            A shopper on your site taps one button. They take a selfie, Mirror measures their
+            A shopper on your site taps one button. They take a selfie, Reflektit measures their
             skin, and it recommends <em>your</em> products — each one naming the measurement that
             chose it. They never leave your storefront, and you write no interface.
           </p>
@@ -502,7 +502,7 @@ shop.shortlists.lipstick[0]
           </MagneticButton>
         </div>
         <div className="mt-20 flex flex-col gap-3 border-t border-[color-mix(in_oklab,var(--ink)_15%,transparent)] pt-8 font-mono text-[10px] uppercase tracking-[0.24em] text-[var(--pencil)] sm:flex-row sm:justify-between">
-          <span>Mirror · built on the YouCam API</span>
+          <span>Reflektit · built on the YouCam API</span>
           <span className="text-[var(--signal)]">status: calibrated</span>
         </div>
       </footer>
