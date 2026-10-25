@@ -1,8 +1,8 @@
-# Mirror
+# Reflektit
 
-**YouCam API Skin AI & Apparel VTO Hackathon — combined track.**
+**YouCam API Skin AI & eCommerce VTO Hackathon.**
 
-Mirror reads one selfie and shops for you. Every product it shows names the
+Reflektit reads one selfie and shops for you. Every product it shows names the
 measurement that chose it, and you can see most of them on your own face.
 
 **Live: [mirror.pykero.com](https://mirror.pykero.com)** — no sign-in needed to
@@ -62,7 +62,7 @@ That is the whole build. Ten YouCam endpoints feed one decision.
 ### The problems this solves
 
 **For the shopper — "will this actually suit me?"**
-Shade finders match a colour and stop. Mirror measures seven skin concerns and
+Shade finders match a colour and stop. Reflektit measures seven skin concerns and
 a face shape too, so the *formula* is prescribed alongside the shade, and every
 product names the reading that chose it. Then it renders that product onto your
 own photo, so the answer is visible rather than promised. One selfie sets a
@@ -128,7 +128,7 @@ And on the other side of the counter:
 7. **List.** A shop signs in, uploads a spreadsheet or points at a feed it
    already publishes, and its products are ranked against real shoppers — with
    colours measured from the photos, not hand-tagged.
-8. **Embed.** Or it skips Mirror entirely and puts the engine on its own
+8. **Embed.** Or it skips Reflektit entirely and puts the engine on its own
    storefront with one `<script>` tag, ranking its own catalogue.
 
 ## YouCam APIs used
@@ -274,24 +274,24 @@ boot, so a redeploy does not empty a merchant's shelf.
 
 ## SDK
 
-Listing on Mirror asks a shop to send its customers somewhere else. Most will
+Listing on Reflektit asks a shop to send its customers somewhere else. Most will
 not. So the same engine drops onto the retailer's **own** storefront, scanning
-their shopper and ranking **their** catalogue — Mirror becomes infrastructure
+their shopper and ranking **their** catalogue — Reflektit becomes infrastructure
 rather than a destination. Full reference: **[docs/sdk.md](docs/sdk.md)**.
 
-One line for the widget — Mirror opens in an overlay over their site:
+One line for the widget — Reflektit opens in an overlay over their site:
 
 ```html
-<script src="https://mirror.pykero.com/sdk/mirror.js"
+<script src="https://mirror.pykero.com/sdk/reflektit.js"
         data-store="store-acme-1" defer></script>
 ```
 
 Or headless, for retailers who want their own interface:
 
 ```ts
-const mirror  = createMirror({ storeId: 'store-acme-1' })
-const reading = await mirror.scan(file)
-const shop    = await mirror.shop(reading)
+const reflektit = createReflektit({ storeId: 'store-acme-1' })
+const reading   = await reflektit.scan(file)
+const shop      = await reflektit.shop(reading)
 ```
 
 The widget is a thin layer over that client, so nothing is reachable through
