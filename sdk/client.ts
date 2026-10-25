@@ -1,16 +1,16 @@
 /**
- * Mirror headless client.
+ * Reflektit headless client.
  *
  * The whole engine with no UI attached: scan a face, get the reading, rank a
  * catalogue against it, render a try-on. Everything the widget does, it does
  * through this — so anything the widget can show, a retailer's own UI can too.
  *
- *   const mirror = createMirror({ storeId: 'store-acme-1' })
- *   const reading = await mirror.scan(file)
- *   const shop    = await mirror.shop(reading)
+ *   const reflektit = createReflektit({ storeId: 'store-acme-1' })
+ *   const reading   = await reflektit.scan(file)
+ *   const shop      = await reflektit.shop(reading)
  */
 
-export interface MirrorConfig {
+export interface ReflektitConfig {
   /** Which shelf to rank. Omit to rank the public feeds only. */
   storeId?: string
   /** Where the API lives. Override when self-hosting. */
@@ -74,17 +74,17 @@ export interface Shop {
 const DEFAULT_BASE = 'https://mirror.pykero.com'
 
 /** Every failure arrives as this, so callers need one catch, not three. */
-export class MirrorError extends Error {
+export class ReflektitError extends Error {
   constructor(
     message: string,
     readonly status: number,
   ) {
     super(message)
-    this.name = 'MirrorError'
+    this.name = 'ReflektitError'
   }
 }
 
-export function createMirror(config: MirrorConfig = {}) {
+export function createReflektit(config: ReflektitConfig = {}) {
   const base = (config.baseUrl ?? DEFAULT_BASE).replace(/\/$/, '')
 
   async function call<T>(path: string, init?: RequestInit): Promise<T> {
@@ -94,7 +94,7 @@ export function createMirror(config: MirrorConfig = {}) {
     // than throwing an opaque parse error.
     const body = await res.json().catch(() => null)
     if (!res.ok) {
-      throw new MirrorError(
+      throw new ReflektitError(
         (body as { error?: string })?.error ?? `Request failed (${res.status}).`,
         res.status,
       )
@@ -160,4 +160,4 @@ export function createMirror(config: MirrorConfig = {}) {
   }
 }
 
-export type Mirror = ReturnType<typeof createMirror>
+export type Reflektit = ReturnType<typeof createReflektit>

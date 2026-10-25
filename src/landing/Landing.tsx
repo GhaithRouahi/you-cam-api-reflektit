@@ -102,7 +102,7 @@ API key    mk_own-9988…      (secret)`,
     t: 'Add one line',
     d: 'A button appears on your storefront. Mirror opens over it, in an iframe.',
     code: `<script
-  src="https://mirror.pykero.com/sdk/mirror.js"
+  src="https://mirror.pykero.com/sdk/reflektit.js"
   data-store="own-99887766" defer></script>`,
   },
 ]
@@ -457,9 +457,9 @@ export function Landing({
               </p>
             </div>
             <pre className="overflow-x-auto rounded-lg border border-[color-mix(in_oklab,var(--paper)_18%,transparent)] bg-[color-mix(in_oklab,var(--paper)_6%,transparent)] p-5 font-mono text-[11.5px] leading-relaxed text-[color-mix(in_oklab,var(--paper)_85%,transparent)]">
-{`const mirror  = createMirror({ storeId: 'store-acme-1' })
-const reading = await mirror.scan(selfie)
-const shop    = await mirror.shop(reading)
+{`const reflektit = createReflektit({ storeId: 'store-acme-1' })
+const reading   = await reflektit.scan(selfie)
+const shop      = await reflektit.shop(reading)
 
 shop.shortlists.lipstick[0]
 → { name: 'Velvet Rouge', price: 29,

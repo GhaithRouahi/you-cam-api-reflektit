@@ -697,7 +697,7 @@ function SdkPanel({
     )
   }
 
-  const snippet = `<script src="${window.location.origin}/sdk/mirror.js"\n        data-store="${keys.storeId}" defer></script>`
+  const snippet = `<script src="${window.location.origin}/sdk/reflektit.js"\n        data-store="${keys.storeId}" defer></script>`
 
   return (
     <section className="stack">

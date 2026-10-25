@@ -1,9 +1,9 @@
-# Mirror SDK
+# Reflektit SDK
 
-Put Mirror's face-reading and colour matching on your own storefront, ranking
+Put Reflektit's face-reading and colour matching on your own storefront, ranking
 **your** catalogue. Two ways in:
 
-- **[Widget](#1-the-widget)** — one `<script>` tag. Mirror opens in an overlay,
+- **[Widget](#1-the-widget)** — one `<script>` tag. Reflektit opens in an overlay,
   scans the shopper, recommends your products. No UI work.
 - **[Headless client](#2-the-headless-client)** — call the engine, render your
   own UI. The widget is built on this, so anything it shows, you can build.
@@ -53,14 +53,14 @@ work identically everywhere below.
 ## 1. The widget
 
 ```html
-<script src="https://mirror.pykero.com/sdk/mirror.js"
+<script src="https://mirror.pykero.com/sdk/reflektit.js"
         data-store="store-acme-beauty-1" defer></script>
 ```
 
 That is the whole integration. A launcher appears bottom-right; clicking it
-opens Mirror in an overlay.
+opens Reflektit in an overlay.
 
-Mirror renders inside an iframe, so your CSS cannot break the scan and Mirror's
+Reflektit renders inside an iframe, so your CSS cannot break the scan and Reflektit's
 styles cannot leak onto your page.
 
 ### Options
@@ -78,14 +78,14 @@ Using your own button:
 
 ```html
 <button id="try-on">See what suits me</button>
-<script src="https://mirror.pykero.com/sdk/mirror.js"
+<script src="https://mirror.pykero.com/sdk/reflektit.js"
         data-store="store-acme-beauty-1" data-target="#try-on" defer></script>
 ```
 
 ### Controlling it from JavaScript
 
 ```js
-const widget = window.Mirror.mount({ storeId: 'store-acme-beauty-1' })
+const widget = window.Reflektit.mount({ storeId: 'store-acme-beauty-1' })
 widget.open()
 widget.close()
 ```
@@ -95,12 +95,12 @@ widget.close()
 ## 2. The headless client
 
 ```ts
-import { createMirror } from '@mirror/sdk'
+import { createReflektit } from '@reflektit/sdk'
 
-const mirror = createMirror({ storeId: 'store-acme-beauty-1' })
+const reflektit = createReflektit({ storeId: 'store-acme-beauty-1' })
 
-const reading = await mirror.scan(file)   // one selfie
-const shop    = await mirror.shop(reading) // ranked against your catalogue
+const reading   = await reflektit.scan(file)    // one selfie
+const shop      = await reflektit.shop(reading) // ranked against your catalogue
 
 // Everything the scan read back, in words: facts, tips, colours that work.
 console.log(reading.profile.summary)
@@ -129,7 +129,7 @@ const { available, shown, recommended } = shop.counts.lipstick
 `scan()` is the only call that spends units, so cache the `Reading` if the
 shopper moves between pages.
 
-Errors arrive as `MirrorError` with a `status`, so one `catch` covers the lot.
+Errors arrive as `ReflektitError` with a `status`, so one `catch` covers the lot.
 
 ---
 
@@ -144,13 +144,13 @@ Rejections come back with a reason.
 
 ### a. Hosted feed (recommended)
 
-Host a JSON or CSV file and point Mirror at it. Nothing to build.
+Host a JSON or CSV file and point Reflektit at it. Nothing to build.
 
 ```bash
 curl -X POST https://mirror.pykero.com/api/sdk/feed \
   -H 'Authorization: Bearer mk_your_key' \
   -H 'Content-Type: application/json' \
-  -d '{"url":"https://acme.com/mirror-feed.json"}'
+  -d '{"url":"https://acme.com/reflektit-feed.json"}'
 ```
 
 The format is detected from the extension; override with
@@ -198,7 +198,7 @@ ever write to its own shelf.
 Small or demo catalogues, straight in the page:
 
 ```js
-window.Mirror.mount({
+window.Reflektit.mount({
   storeId: 'store-acme-beauty-1',
   products: [
     { name: 'Velvet Rouge', aisle: 'lipstick', hex: '#B8615C', price: 29 },

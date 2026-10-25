@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && bun run build:sdk",
-    "build:sdk": "bun build sdk/embed.ts --outfile dist/sdk/mirror.js --target browser --minify",
+    "build:sdk": "bun build sdk/embed.ts --outfile dist/sdk/reflektit.js --target browser --minify",
     "lint": "oxlint",
     "preview": "vite preview",
     "dev:web": "vite",
