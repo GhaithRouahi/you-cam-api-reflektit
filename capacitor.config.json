@@ -1,6 +1,6 @@
 {
   "appId": "com.pykero.mirror",
-  "appName": "Mirror",
+  "appName": "Reflektit",
   "webDir": "dist",
   "server": {
     "url": "https://mirror.pykero.com",
